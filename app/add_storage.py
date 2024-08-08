@@ -20,7 +20,22 @@ storage_tablename = os.getenv("STORAGE_TABLENAME")
                     feed_poll_delay=5000,
                     lease_container_name="leases") 
 def add_tablestorage(items: func.DocumentList):
+    """
+    この関数は、Cosmos DB の ChangeFeed によってトリガーされます。
 
+    Args:
+        items (func.DocumentList): Cosmos DB の ChangeFeed からのドキュメントのリスト。
+        arg_name (str): ChangeFeed からのドキュメントが格納される引数の名前。
+        connection (str): Cosmos DB アカウントの接続文字列。
+        database_name (str): Cosmos DB データベースの名前。
+        container_name (str): Cosmos DB コンテナの名前。
+        create_lease_container_if_not_exists (bool): リースコンテナが存在しない場合に作成するかどうか。
+        feed_poll_delay (int): ChangeFeed の変更をポーリングする間隔（ミリ秒）。
+        lease_container_name (str): リースを格納するコンテナの名前。
+
+    この関数は、ChangeFeed を処理して、アイテムをテーブルストレージに追加するなどの必要な操作を行います。
+    """
+  
     # Azure Table Storageクライアントの初期化
     table_service_client = TableServiceClient.from_connection_string(conn_str=storage_connection_string)
     table_client = table_service_client.get_table_client(table_name=storage_tablename)
