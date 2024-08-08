@@ -5,7 +5,9 @@
     "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
     "AzureWebJobsStorage": "",
     "COSMOS_CONNECTION": "",
-    "COSMOS_DB_NAME": "aoai",
-    "COSMOS_CONTAINER_NAME": "azure"
+    "COSMOS_DB_NAME": "chatdb",
+    "COSMOS_CONTAINER_NAME": "chatapp",
+    "STORAGE_CONNECTION": "",
+    "STORAGE_TABLENAME": "chatapp"
   }
 }
