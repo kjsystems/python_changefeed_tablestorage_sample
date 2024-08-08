@@ -2,7 +2,7 @@
 
 ## このリポジトリの説明
 
-このリポジトリは、Azure Change Feed を使用して Azure Blob Storage の変更を監視し、その変更を Azure Table Storage に書き込む方法を示しています。`REST.http` ファイルを使用してデータを追加すると、Change Feed が発動し、そのデータが Table Storage に追加されます。
+このリポジトリは、Azure Change Feed を使用して Cosmos DB に追加されたデータを Azure Table Storage に書き込む方法を示しています。`REST.http` ファイルを使用してデータを追加すると、Change Feed が発動し、そのデータが Table Storage に追加されます。
 
 ## 実行方法
 
