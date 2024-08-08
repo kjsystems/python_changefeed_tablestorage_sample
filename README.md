@@ -9,10 +9,10 @@
 #### function_app.py
 - エントリーポイントです
 
-### add_data.py
+#### add_data.py
 - JSON データを Cosmos DB に追加します
 
-### add_storage.py
+#### add_storage.py
 - Cosmos DB のコンテナを関している ChangeFeed プロセッサーです
 - Cosmos DB にデータが追加されるとそのデータが items プロパティに入ります
 - items の中身をみて assistant の時だけ TableStorage に追加します
