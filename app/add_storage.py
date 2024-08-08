@@ -1,9 +1,6 @@
 import os
 import azure.functions as func
-import datetime
-import json
 import logging
-from azure.cosmos import CosmosClient
 import azure.functions as func
 
 addstorage_bp = func.Blueprint()

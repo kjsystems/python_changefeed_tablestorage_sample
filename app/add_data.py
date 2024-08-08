@@ -1,8 +1,5 @@
 import os
 import azure.functions as func
-import datetime
-import json
-import logging
 from azure.cosmos import CosmosClient
 
 adddata_bp = func.Blueprint()
