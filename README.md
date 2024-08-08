@@ -4,6 +4,20 @@
 
 このリポジトリは、Cosmos DB の Change Feed を使用して Cosmos DB に追加されたデータを Azure Table Storage に書き込む方法を示しています。`REST.http` ファイルを使用してデータを追加すると、Change Feed が発動し、そのデータが Table Storage に追加されます。
 
+## Python ファイルの説明
+
+### function_app.py
+- エントリーポイントです
+
+### add_data.py
+- JSON データを Cosmos DB に追加します
+
+### add_storage.py
+- Cosmos DB のコンテナを関している ChangeFeed プロセッサーです
+- Cosmos DB にデータが追加されるとそのデータが items プロパティに入ります
+- items の中身をみて assistant の時だけ TableStorage に追加します
+
+
 ## 実行方法
 
 1. **環境のセットアップ**:
