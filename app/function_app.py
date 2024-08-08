@@ -1,33 +1,42 @@
+import os
 import azure.functions as func
 import datetime
 import json
 import logging
+from azure.cosmos import CosmosClient
+
 
 app = func.FunctionApp()
 
-@app.route(route="add_data", auth_level=func.AuthLevel.FUNCTION)
+cosmos_client = CosmosClient.from_connection_string(os.getenv("COSMOS_CONNECTION"))
+
+@app.route(route="add_data",
+           methods=["POST"],
+           auth_level=func.AuthLevel.FUNCTION)
 def add_data(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    client = cosmos_client.get_database_client(os.getenv("COSMOS_DB_NAME"))
+    container = client.get_container_client(os.getenv("COSMOS_CONTAINER_NAME"))
 
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    items = req.get_json()
 
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
-    else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
+    for item in items:
+        container.upsert_item(item)
+
+    return func.HttpResponse(f"{len(items)} data uploaded.", status_code=200)
 
 
-@app.cosmos_db_trigger(arg_name="azcosmosdb", container_name="chat",
-                        database_name="aoai", connection="CosmosDbConnectionString") 
-def add_tablestorage(azcosmosdb: func.DocumentList):
-    logging.info('Python CosmosDB triggered.')
+database_name = os.getenv("COSMOS_DB_NAME")
+container_name = os.getenv("COSMOS_CONTAINER_NAME")
+
+
+@app.cosmos_db_trigger(arg_name="items",
+                    connection="COSMOS_CONNECTION",
+                    database_name=database_name,
+                    container_name=container_name,
+                    create_lease_container_if_not_exists=True,
+                    feed_poll_delay=5000,
+                    lease_container_name="leases") 
+def add_tablestorage(items: func.DocumentList):
+
+    for item in items:
+        logging.info('triggered. ID: %s role:%s content:%s', item["id"], item["role"], item["content"])
