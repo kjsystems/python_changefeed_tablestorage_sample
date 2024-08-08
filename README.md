@@ -13,8 +13,8 @@
 - JSON データを Cosmos DB に追加します
 
 #### add_storage.py
-- Cosmos DB のコンテナを関している ChangeFeed プロセッサーです
-- Cosmos DB にデータが追加されるとそのデータが items プロパティに入ります
+- Cosmos DB のコンテナを監視している ChangeFeed プロセッサーです
+- Cosmos DB にデータが追加されると追加されたデータが items プロパティに入ります
 - items の中身をみて assistant の時だけ TableStorage に追加します
 
 
